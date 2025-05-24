@@ -1,0 +1,39 @@
+diff --git a/dist/cjs/client/client.js b/dist/cjs/client/client.js
+index 90e23e5bcdc5c07be3c71cfb3fbe2334278fa220..5ebcbe881636fb3d3e9f9a04f9b36b10e74ac56d 100644
+--- a/dist/cjs/client/client.js
++++ b/dist/cjs/client/client.js
+@@ -144,7 +144,7 @@ const hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
+         result = result + "?" + (0, import_utils.buildSearchParams)(opts.args[0].query).toString();
+       }
+     }
+-    return new URL(result);
++    return result;
+   }
+   if (method === "ws") {
+     const webSocketUrl = (0, import_utils.replaceUrlProtocol)(
+diff --git a/dist/client/client.js b/dist/client/client.js
+index 7c7f9840d220770f70ecf99214fb2afd363cd674..8c3c324c272af2089d08d9a16f176a8441e70ed2 100644
+--- a/dist/client/client.js
++++ b/dist/client/client.js
+@@ -129,7 +129,7 @@ var hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
+         result = result + "?" + buildSearchParams(opts.args[0].query).toString();
+       }
+     }
+-    return new URL(result);
++    return result;
+   }
+   if (method === "ws") {
+     const webSocketUrl = replaceUrlProtocol(
+diff --git a/dist/types/client/types.d.ts b/dist/types/client/types.d.ts
+index fb6f879fd1975b72b6c392e540dc3e2a1110e589..087504f4d7d855c97bd19e10554827d81cb697fe 100644
+--- a/dist/types/client/types.d.ts
++++ b/dist/types/client/types.d.ts
+@@ -39,7 +39,7 @@ export type ClientRequest<S extends Schema> = {
+         query: infer Q;
+     } ? {
+         query: Q;
+-    } : {} : {}) => URL;
++    } : {} : {}) => string;
+ } & (S["$get"] extends {
+     outputFormat: "ws";
+ } ? S["$get"] extends {
