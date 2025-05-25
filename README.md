@@ -1,5 +1,4 @@
-<h4 align="right"><strong>English</strong> | <a href="https://github.com/AprilNEA/ChatGPT-Admin-Web/blob/master/README_CN.md">
-简体中文</a></h4>
+<h4 align="right"><strong>English</strong> | <a href="./README_CN.md">简体中文</a></h4>
 <p align="center">
     <img src="./docs/public/icon.png" width=138/>
 </p>

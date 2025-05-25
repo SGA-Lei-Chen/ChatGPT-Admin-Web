@@ -1,5 +1,4 @@
-<h4 align="right"><strong>简体中文</strong> | <a href="./README_CN.md">
-English</a></h4>
+<h4 align="right"><strong>简体中文</strong> | <a href="./README.md">English</a></h4>
 <p align="center">
     <img src="./docs/public/icon.png" width=138/>
 </p>
