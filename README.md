@@ -43,9 +43,10 @@ For configuration and installation, see [documentation](https://manual.sku.moe/p
 
 ## Versions
 
-| Version                                                       | Status                               | Note                            |
-| ------------------------------------------------------------- | ------------------------------------ | ------------------------------- |
-| [V3](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v3)   | :white_check_mark: Long-term support | Refactor with modern tech stack |
+| Version                                    | Status                               | Note |
+| ------------------------------------------ | ------------------------------------ | ---- |
+| [V4](https://github.com/AChatLab/AChat/tree/canary) | :white_check_mark: Under Development |      |
+| [V3](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v3)   | :o: No longer updated    | Refactor with modern tech stack |
 | [V2](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v2)   | :x: Deprecated                       | Flawed design                   |
 | [V1](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/main) | :o: No longer updated                | Redis database, less scalable   |
 

@@ -38,6 +38,7 @@ English</a></h4>
 
 | 版本                                                          | 状态     | 备注                      |
 | ------------------------------------------------------------- | -------- | ------------------------- |
+| [V4](https://github.com/AChatLab/AChat/tree/canary) | :white_check_mark: 开发中 |      |
 | [V3](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v3)   | 长期支持 | 使用全新的技术栈重构      |
 | [V2](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v2)   | 弃用     | 存在设计缺陷              |
 | [V1](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/main) | 不再更新 | Redis数据库，可拓展性较差 |
