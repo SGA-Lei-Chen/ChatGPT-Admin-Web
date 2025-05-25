@@ -5,19 +5,21 @@ English</a></h4>
 </p>
 <h1 align="center">AChat</h1>
 <p align="center">AChat 是一个开源的 AI 智能平台，专为企业和团队设计，将强大的本地处理能力与无缝的远程同步功能完美结合。<br/> 它让您的对话数据如同海浪般自由流动，同时保持数据的安全与隐私。</p>
-<div align="center">
-    <a href="https://twitter.com/AprilNEA" target="_blank">
-    <img alt="twitter" src="https://img.shields.io/badge/follow-AprilNEA-green?style=flat-square&logo=Twitter"></a>
-    <a href="https://t.me/ChatGPTAdminWebChannel" target="_blank">
-    <img alt="telegram" src="https://img.shields.io/badge/channel-telegram-blueviolet?style=flat-square&logo=Telegram"></a>
-    <a href="https://github.com/AprilNEA/ChatGPT-Admin-Web/commits" target="_blank">
-    <img alt="GitHub commit" src="https://img.shields.io/github/commit-activity/m/AprilNEA/ChatGPT-Admin-Web?style=flat-square"></a>
-    <a href="https://github.com/AprilNEA/ChatGPT-Admin-Web/issues?q=is%3Aissue+is%3Aclosed" target="_blank">
-    <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed/AprilNEA/ChatGPT-Admin-Web.svg?style=flat-square"></a>
-<br/>    
-<img src="https://hits.siyue.best/v1/hits?url=https://github.com/AprilNEA/ChatGPT-Admin-Web&bgRight=000&bgLeft=000&border=square" />
 
-</div>
+<p align="center">
+  <a href="https://github.com/AprilNEA/AChat/stargazers"><img src="https://img.shields.io/github/stars/AprilNEA/AChat" alt="Stars Badge"/></a>
+  <a href="https://github.com/AprilNEA/AChat/network/members"><img src="https://img.shields.io/github/forks/AprilNEA/AChat" alt="Forks Badge"/></a>
+  <a href="https://github.com/AprilNEA/AChat/pulls"><img src="https://img.shields.io/github/issues-pr/AprilNEA/AChat" alt="Pull Requests Badge"/></a>
+  <a href="https://github.com/AprilNEA/AChat/issues"><img src="https://img.shields.io/github/issues-closed/AprilNEA/AChat" alt="Issues Badge"/></a>
+  <a href="https://github.com/AprilNEA/AChat/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AprilNEA/AChat" alt="License Badge"/></a>
+  <br/> 
+  <a href="https://twitter.com/AprilNEA" target="_blank">
+    <img alt="twitter" src="https://img.shields.io/twitter/follow/AprilNEA"></a>
+  <a href="https://t.me/achatlab" target="_blank">
+    <img alt="telegram" src="https://img.shields.io/badge/channel-telegram-blueviolet?style=flat&logo=Telegram"></a>
+  <img src="https://hits.aprilnea.com/hits?url=https://github.com/AprilNEA/AChat" />
+</p>
+
 
 <div align="center">
 
@@ -34,10 +36,10 @@ English</a></h4>
 
 ## 版本
 
-| 版本                                                            | 状态   | 备注              |
-|---------------------------------------------------------------|------|-----------------|
+| 版本                                                          | 状态     | 备注                      |
+| ------------------------------------------------------------- | -------- | ------------------------- |
 | [V3](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v3)   | 长期支持 | 使用全新的技术栈重构      |
-| [V2](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v2)   | 弃用   | 存在设计缺陷          |
+| [V2](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v2)   | 弃用     | 存在设计缺陷              |
 | [V1](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/main) | 不再更新 | Redis数据库，可拓展性较差 |
 
 [更新日志](https://manual.sku.moe/project/chatgpt-admin-web/update-log)
