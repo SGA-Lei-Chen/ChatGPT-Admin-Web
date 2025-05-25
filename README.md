@@ -29,13 +29,30 @@
 
 </div>
 
-## Features
+## Main Features 
+- 💬 **Centralized AI Conversation Management**
+  Manage all team AI dialogues in one unified platform for easy tracking and collaboration.
 
-- 🌈 Customizable appearance
-- 👻 Out-of-the-box user management
-- 💰 Payment plan configuration, one-click interfacing to payment interfaces
-- 🔐 Keyword filtering, replacement to ensure text security
+- 🗂️ **Organized Conversation History**
+  Effortlessly search, categorize, and revisit past AI interactions.
 
+-	💸 **Built-in Commercial Support**
+  Integrated tools for AI usage billing, payment, and cost management.
+
+-	👥 **Team Collaboration Tools**
+  Assign roles, set permissions, and work together seamlessly.
+
+- 🔒 **Data Privacy & Security**
+  Open-source transparency with robust data protection features.
+
+- 🚀 **Customizable & Extensible**
+  Easily integrate with your workflows and extend functionalities via plugins.
+
+-	📑 **Data Compliance**
+  Ensure compliance with data regulations and industry standards for secure and lawful data management.
+
+-	🛡️ **Content Moderation**
+  Built-in content review features help monitor, filter, and manage inappropriate or sensitive information.
 
 ## Start
 
@@ -45,35 +62,18 @@ For configuration and installation, see [documentation](https://manual.sku.moe/p
 
 | Version                                    | Status                               | Note |
 | ------------------------------------------ | ------------------------------------ | ---- |
-| [V4](https://github.com/AChatLab/AChat/tree/canary) | :white_check_mark: Under Development |      |
-| [V3](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v3)   | :o: No longer updated    | Refactor with modern tech stack |
-| [V2](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/v2)   | :x: Deprecated                       | Flawed design                   |
-| [V1](https://github.com/AprilNEA/ChatGPT-Admin-Web/tree/main) | :o: No longer updated                | Redis database, less scalable   |
+| [V4](https://github.com/AprilNEA/AChat/tree/canary) | :white_check_mark: Under Development |      |
+| [V3](https://github.com/AprilNEA/AChat/tree/v3)   | :o: No longer updated    | Refactor with modern tech stack |
+| [V2](https://github.com/AprilNEA/AChat/tree/v2)   | :x: Deprecated                       | Flawed design                   |
+| [V1](https://github.com/AprilNEA/AChat/tree/main) | :o: No longer updated                | Redis database, less scalable   |
 
 [Update Log](https://manual.sku.moe/project/chatgpt-admin-web/update-log)
 
-
-## 技术栈
-
-| Part     | Tech               |
-| :------- | :----------------- |
-| Frontend | Next.js            |
-| Backend  | Nest.js            |
-| Database | PostgreSQL & Redis |
-
-You can go to [Developer Manual](https://manual.sku.moe/project/chatgpt-admin-web/development) for more technical details.
-
 ## Project Status
 
-![Alt](https://repobeats.axiom.co/api/embed/67fc3464887e0956a6225b4c5c6579c2699d8363.svg "Repobeats analytics image")
+![Project Status](https://repobeats.axiom.co/api/embed/731fc03bff4e8b722fa66c9f2b25242f54cf7a50.svg "Repobeats analytics image")
 
-News: [Telegram Channel](https://t.me/ChatGPTAdminWebChannel)*
-
-## Contributors
-
-<a href="https://github.com/AprilNEA/ChatGPT-Admin-Web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=AprilNEA/ChatGPT-Admin-Web" />
-</a>
+News: [Telegram Channel](https://t.me/AChat)
 
 ## Star History
 
