@@ -1,0 +1,76 @@
+name: achat
+
+services:
+  postgres:
+    container_name: achat-postgres
+    image: ${POSTGRES_IMAGE:-postgres:17}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    expose:
+      - 5432
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    container_name: achat-redis
+    image: ${REDIS_IMAGE:-redis:7}
+    environment:
+      - "REDIS_ARGS=--appendonly yes"
+    expose:
+      - 6379
+    # ports:
+    #   - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: always
+
+  inngest:
+    container_name: achat-inngest
+    image: ${INNGEST_IMAGE:-inngest/inngest}
+    command: ["inngest", "start", "--sdk-url", "http://host.docker.internal:3001/api/inngest"]
+    environment:
+      # INNGEST_EVENT_KEY: 
+      # INNGEST_SIGNING_KEY:
+      INNGEST_SQLITE_DIR: /data
+    expose:
+      - 8288
+    # ports:
+    #   - "8288:8288"
+    volumes:
+      - inngest-data:/data
+
+  minio:
+    container_name: achat-minio
+    image: ${MINIO_IMAGE:-minio/minio}
+    volumes:
+      - minio-data:/data
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --console-address ":9001"
+    expose:
+      - 9000
+      - 9001
+    # ports:
+    #   - "9000:9000"
+    #   - "9001:9001"
+      
+  # loki:
+  #   image: grafana/loki:3.4.1
+  #   command: -config.file=/etc/loki/local-config.yaml
+  #   ports:
+  #     - "3100:3100"
+  #   volumes:
+  #     - nboard-loki-data:/loki
+  #   restart: always
+
+volumes:
+  postgres-data:
+  redis-data:
+  inngest-data:
+  minio-data:
