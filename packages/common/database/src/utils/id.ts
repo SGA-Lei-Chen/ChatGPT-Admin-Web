@@ -1,9 +1,6 @@
 import { sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import type { PgSequence } from "drizzle-orm/pg-core";
-import { v7 as uuidv7 } from "uuid";
-
-export const generateUuid = () => uuidv7();
 
 export class HiLoIdGenerator {
   private hi = 0;
@@ -13,7 +10,7 @@ export class HiLoIdGenerator {
   constructor(
     private readonly db: NodePgDatabase,
     private readonly sequence: PgSequence,
-    maxLo = 1000,
+    maxLo = 1000
   ) {
     this.maxLo = maxLo;
     this.lo = maxLo; // 初始化时触发获取
@@ -21,7 +18,7 @@ export class HiLoIdGenerator {
 
   private async fetchNextHi(): Promise<number> {
     const result = await this.db.execute(
-      sql`SELECT nextval(${this.sequence.seqName}) as hi`,
+      sql`SELECT nextval(${this.sequence.seqName}) as hi`
     );
     return Number(result.rows[0].hi);
   }

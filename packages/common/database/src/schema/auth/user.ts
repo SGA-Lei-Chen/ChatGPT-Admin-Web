@@ -1,15 +1,13 @@
 import {
   boolean,
-  decimal,
   integer,
   jsonb,
   pgTableCreator,
   text,
   timestamp,
   uuid,
-  varchar,
 } from "drizzle-orm/pg-core";
-import { generateUuid } from "../utils/id";
+import { organization } from "./organization";
 
 export const pgTable = pgTableCreator((name) => `auth_${name}`);
 
@@ -23,6 +21,7 @@ export const user = pgTable("user", {
   emailVerified: boolean("email_verified").notNull(),
   image: text("image"),
 
+  isAnonymous: boolean("is_anonymous"),
   banned: boolean("banned"),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires", { withTimezone: true }),
@@ -32,25 +31,27 @@ export const user = pgTable("user", {
 });
 
 export const session = pgTable("session", {
-  id: text("id").primaryKey(),
+  id: uuid("id").primaryKey(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   token: text("token").notNull().unique(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
   ipAddress: text("ip_address"),
   userAgent: text("user_agent"),
-  userId: text("user_id")
+  userId: uuid("user_id")
     .notNull()
     .references(() => user.id),
-  impersonatedBy: text("impersonated_by"),
-  activeOrganizationId: text("active_organization_id"),
+  impersonatedBy: uuid("impersonated_by").references(() => user.id),
+  activeOrganizationId: uuid("active_organization_id").references(
+    () => organization.id
+  ),
 });
 
 export const account = pgTable("account", {
-  id: text("id").primaryKey(),
-  accountId: text("account_id").notNull(),
-  providerId: text("provider_id").notNull(),
-  userId: text("user_id")
+  id: uuid("id").primaryKey(),
+  accountId: uuid("account_id").notNull(),
+  providerId: uuid("provider_id").notNull(),
+  userId: uuid("user_id")
     .notNull()
     .references(() => user.id),
   accessToken: text("access_token"),
@@ -69,7 +70,7 @@ export const account = pgTable("account", {
 });
 
 export const verification = pgTable("verification", {
-  id: text("id").primaryKey(),
+  id: uuid("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
@@ -78,10 +79,10 @@ export const verification = pgTable("verification", {
 });
 
 export const passkey = pgTable("passkey", {
-  id: text("id").primaryKey(),
+  id: uuid("id").primaryKey(),
   name: text("name"),
   publicKey: text("public_key").notNull(),
-  userId: text("user_id")
+  userId: uuid("user_id")
     .notNull()
     .references(() => user.id),
   webauthnUserID: text("webauthn_user_id").notNull(),
@@ -93,12 +94,12 @@ export const passkey = pgTable("passkey", {
 });
 
 export const apiKey = pgTable("api_key", {
-  id: text("id").primaryKey(),
+  id: uuid("id").primaryKey(),
   name: text("name"),
   start: text("start"),
   prefix: text("prefix"),
   key: text("key").notNull(),
-  userId: text("user_id")
+  userId: uuid("user_id")
     .notNull()
     .references(() => user.id),
   refillInterval: integer("refill_interval"),

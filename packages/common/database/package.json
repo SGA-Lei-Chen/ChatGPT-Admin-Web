@@ -1,0 +1,48 @@
+{
+  "name": "@achat/database",
+  "type": "module",
+  "exports": {
+    "./schema": {
+      "import": {
+        "types": "./dist/schema.d.ts",
+        "default": "./dist/schema.js"
+      }
+    },
+    "./utils": {
+      "import": {
+        "types": "./dist/utils.d.ts",
+        "default": "./dist/utils.js"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "ts-map": "tsc --rootDir ./src --emitDeclarationOnly",
+    "dev": "bunchee -w --success \"npm run ts-map\"",
+    "build": "bunchee && npm run asset",
+    "push": "drizzle-kit push",
+    "migrate": "tsx migrate.ts",
+    "generate": "drizzle-kit generate"
+  },
+  "dependencies": {
+    "drizzle-orm": "*",
+    "drizzle-zod": "*",
+    "uuid": "*",
+    "zod": "*"
+  },
+  "devDependencies": {
+    "@achat/tsconfig": "workspace:*",
+    "@types/node": "*",
+    "@types/pg": "*",
+    "@types/uuid": "*",
+    "dotenv": "^16.4.7",
+    "drizzle-kit": "*",
+    "drizzle-seed": "^0.3.1",
+    "esbuild": "*",
+    "pg": "*",
+    "tsx": "*",
+    "typescript": "*"
+  }
+}
