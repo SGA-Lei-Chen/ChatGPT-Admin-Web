@@ -1,15 +1,54 @@
-import { appFactory } from "@server/factory";
+import { describeRoute } from "hono-openapi";
+import { accepts } from "hono/accepts";
+import { Hono } from "hono";
 
-const startTime = Date.now();
+const app = new Hono()
+  .use(
+    describeRoute({
+      tags: ["Health"],
+    })
+  )
+  .get(
+    "/health",
+    describeRoute({
+      description:
+        "Health check endpoint that returns the system status in either plain text or JSON format",
 
-const app = appFactory
-  .createApp()
-  .get("/health", (c) => {
-    return c.json({
-      status: "ok",
-      uptime: Date.now() - startTime,
-      connInfo: { ip: c.get("connInfo").ip },
-    });
-  });
+      responses: {
+        200: {
+          description: "Successful response",
+          content: {
+            "text/plain": {
+              schema: {
+                type: "string",
+                example: "ok",
+              },
+            },
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  status: { type: "string", example: "ok" },
+                },
+              },
+            },
+          },
+        },
+      },
+    }),
+    (c) => {
+      const accept = accepts(c, {
+        header: "Accept",
+        supports: ["text/plain", "application/json"],
+        default: "text/plain",
+      });
+      if (accept === "application/json") {
+        return c.json({
+          status: "ok",
+        });
+      }
+      return c.text("ok");
+    }
+  );
 
 export default app;

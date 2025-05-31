@@ -144,18 +144,47 @@ app.get(
   "/docs",
   apiReference({
     theme: "saturn",
-    spec: { url: "/openapi" },
+    spec: { url: "/api/openapi" },
   })
 );
+declare module "openapi-types" {
+  namespace OpenAPIV3 {
+    interface Document {
+      "x-tagGroups"?: Array<{
+        name: string;
+        tags: string[];
+      }>;
+    }
+    interface TagObject {
+      "x-displayName"?: string;
+    }
+  }
+}
 app.get(
   "/openapi",
-  openAPISpecs(app, {
+  openAPISpecs(routes, {
     documentation: {
       info: {
         title: "AChat API",
+        description:
+          "Auth OpenAPI Document: <a href='/api/auth/reference'>/api/auth/reference</a>",
         version: "4.0.0",
       },
-      servers: [{ url: "http://localhost:3001", description: "Local Server" }],
+      servers: [{ url: "/api", description: "Local Server" }],
+      "x-tagGroups": [
+        {
+          name: "System",
+          tags: ["Health"],
+        },
+        {
+          name: "User",
+          tags: ["Chat"],
+        },
+        {
+          name: "Admin",
+          tags: ["Model"],
+        },
+      ],
     },
   })
 );

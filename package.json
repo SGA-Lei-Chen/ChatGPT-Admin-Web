@@ -1,12 +1,22 @@
 {
   "name": "achat",
   "version": "4.0.0",
-  "description": "ChatGPT Admin Web",
+  "description": "🌊 AChat - An open-source/self-hosted/local-first AI platform, designed for enterprises and teams, perfectly combining powerful local processing capabilities with seamless remote synchronization.",
+  "keywords": [
+    "ai",
+    "chat",
+    "agent",
+    "chatbot",
+    "local-first",
+    "self-hosted",
+    "open-source",
+    "enterprise-solutions"
+  ],
   "license": "MIT",
   "author": "AprilNEA <github@sku.moe> (https://sku.moe)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AprilNEA/AprilChat"
+    "url": "git+https://github.com/AprilNEA/AChat"
   },
   "scripts": {
     "build": "turbo run build",
@@ -14,10 +24,7 @@
     "dev": "turbo run dev --parallel",
     "start": "turbo run start",
     "lint": "turbo run lint",
-    "test": "vitest run",
-    "prettier": "prettier --write .",
-    "db:init": "prisma db push && prisma db seed",
-    "db:generate": "prisma generate"
+    "test": "vitest run"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
@@ -50,7 +57,6 @@
     "typescript": "^5.7.3",
     "vitest": "^3.1.2"
   },
-  "packageManager": "pnpm@10.8.1",
   "pnpm": {
     "overrides": {
       "react": "19.1.0",
@@ -68,5 +74,6 @@
     "patchedDependencies": {
       "hono@4.7.6": "patches/hono@4.7.6.patch"
     }
-  }
+  },
+  "packageManager": "pnpm@10.10.0"
 }

@@ -1,60 +1,25 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": [
-    "DATABASE_URL",
-    "REDIS_URL"
+    "DATABASE_URL"
   ],
-  "pipeline": {
-    "db:generate": {
-      "dependsOn": [
-        "^db:generate"
-      ],
-      "outputs": [
-        ".client/**"
-      ]
-    },
-    "frontend#build": {
-      "inputs": ["config.json"],
-      "dependsOn": [
-        "shared#build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**"
-      ]
-    },
-    "backend#build": {
-      "dependsOn": [
-        "db:generate",
-        "shared#build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
-    },
+  "tasks": {
     "build": {
-      "inputs": ["config.json"],
-      "dependsOn": [
-        "db:generate",
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
-    "//#test": {
-      "dependsOn": []
-    },
-    "start": {
-      "dependsOn": [
-        "^start"
-      ]
+    "check-types": {
+      "dependsOn": ["^check-types"]
     },
     "dev": {
-      "cache": false,
-      "persistent": true
+      "persistent": true,
+      "cache": false
+    },
+    "start": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
     }
   }
 }

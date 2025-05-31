@@ -18,6 +18,11 @@ export const registry = createProviderRegistry({
 });
 const app = appFactory
   .createApp()
+  .use(
+    describeRoute({
+      tags: ["Chat"],
+    })
+  )
   .get(
     "/conversation",
     describeRoute({
