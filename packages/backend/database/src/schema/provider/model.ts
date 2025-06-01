@@ -18,7 +18,7 @@ export const ProviderConfig = z.object({
 });
 export type ProviderConfig = z.infer<typeof ProviderConfig>;
 
-export const providers = pgTable("providers", {
+export const provider = pgTable("provider", {
   id: uuid("id").primaryKey(),
   organizationId: uuid("organization_id")
     .notNull()
@@ -54,7 +54,7 @@ export const providerModels = pgTable("provider_models", {
   /* 提供商 */
   providerId: uuid("provider_id")
     .notNull()
-    .references(() => providers.id),
+    .references(() => provider.id),
   /* 模型名称（如 gpt-3.5-turbo） */
   modelName: varchar("model_name").notNull(),
   /* 模型类型（如 chat、embedding、rerank、speech2text） */

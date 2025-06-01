@@ -1,19 +1,10 @@
 {
   "name": "@achat/database",
   "type": "module",
+  "main": "./src/index.ts",
   "exports": {
-    "./schema": {
-      "import": {
-        "types": "./dist/schema.d.ts",
-        "default": "./dist/schema.js"
-      }
-    },
-    "./utils": {
-      "import": {
-        "types": "./dist/utils.d.ts",
-        "default": "./dist/utils.js"
-      }
-    }
+    "./schema": "./src/schema.ts",
+    "./utils": "./src/utils.ts"
   },
   "files": [
     "dist"

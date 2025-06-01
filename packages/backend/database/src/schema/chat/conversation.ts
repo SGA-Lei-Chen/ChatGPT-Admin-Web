@@ -12,8 +12,10 @@ import { timeColumns } from "../../utils/columns";
 
 export const conversation = pgTable("conversation", {
   id: uuid("id").primaryKey(),
-  orgId: uuid("org_id").references(() => organization.id),
-  userId: uuid("user_id").references(() => user.id),
+  organizationId: uuid("organization_id")    .notNull().references(() => organization.id),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => user.id),
 
   title: varchar("title", { length: 255 }).notNull(),
 
