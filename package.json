@@ -72,7 +72,7 @@
       ]
     },
     "patchedDependencies": {
-      "hono@4.7.6": "patches/hono@4.7.6.patch"
+      "hono": "patches/hono.patch"
     }
   },
   "packageManager": "pnpm@10.10.0"
