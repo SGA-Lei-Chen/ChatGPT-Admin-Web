@@ -25,10 +25,9 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
+  "references": [{ "path": "../../backend/server/tsconfig.json" }],
   "include": ["src"]
 }

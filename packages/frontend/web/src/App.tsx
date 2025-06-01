@@ -1,23 +1,31 @@
-import { Link, Route, Switch } from "wouter";
+import { Route, Switch } from "wouter";
+
+import AuthPage from "./pages/auth";
+
+import DashboardLayout from "./pages/dashboard/layout";
 
 const App = () => (
   <>
-    <Link href="/users/1">Profile</Link>
-
-    <Route path="/about">About Us</Route>
-
     {/* 
       Routes below are matched exclusively -
       the first matched route gets rendered
     */}
     <Switch>
-      {/* <Route path="/inbox" component={InboxPage} /> */}
-
-      <Route path="/users/:name">
-        {(params) => <>Hello, {params.name}!</>}
+      <Route path="/auth" component={AuthPage} />
+      <Route path="/app" nest>
+        <Route path="/users/:id" nest>
+          <Route path="/orders" />
+        </Route>
       </Route>
-      <Route path="/console/:name">
-        {(params) => <>Hello, {params.name}!</>}
+      <Route path="/dashboard" nest>
+        <DashboardLayout>
+          <Route path="/models" nest>
+            <Route path="/orders" />
+          </Route>
+          <Route path="/settings" nest>
+            <Route path="/orders" />
+          </Route>
+        </DashboardLayout>
       </Route>
 
       {/* Default route in a switch */}
@@ -26,4 +34,4 @@ const App = () => (
   </>
 );
 
-export default App
+export default App;
