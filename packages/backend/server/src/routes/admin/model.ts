@@ -1,15 +1,37 @@
+import BizError, { BizCodeEnum } from "@achat/error/biz";
 import { appFactory } from "@server/factory";
 import { authGuard } from "@server/middleware/auth";
 import { describeRoute } from "hono-openapi";
-import { accepts } from "hono/accepts";
 
 const app = appFactory
   .createApp()
   .use(authGuard("admin"))
-  .get(
-    "/health",
+  .post(
+    "/provider",
     describeRoute({
-      description: "Update a message",
+      description: "Install a model provider in the organization",
+      responses: {
+        200: {
+          description: "Successful response",
+          content: {
+            "application/json": {},
+          },
+        },
+      },
+    }),
+    async (c) => {
+      const db = c.get("db");
+      const user = c.get("user");
+      const session = c.get("session");
+      if (!session.activeOrganizationId) {
+        throw new BizError(BizCodeEnum.OrganizationNotFound);
+      }
+    }
+  )
+  .get(
+    "/provider",
+    describeRoute({
+      description: "Get all model providers",
       responses: {
         200: {
           description: "Successful response",
@@ -32,18 +54,45 @@ const app = appFactory
         },
       },
     }),
-    (c) => {
-      const accept = accepts(c, {
-        header: "Accept",
-        supports: ["text/plain", "application/json"],
-        default: "text/plain",
-      });
-      if (accept === "application/json") {
-        return c.json({
-          status: "ok",
-        });
+    async (c) => {
+      const db = c.get("db");
+      const user = c.get("user");
+      const session = c.get("session");
+      if (!session.activeOrganizationId) {
+        throw new BizError(BizCodeEnum.OrganizationNotFound);
       }
-      return c.text("ok");
+      const providers = await db.query.provider.findMany({
+        where: (t, { and, eq }) =>
+          and(
+            session.activeOrganizationId
+              ? eq(t.organizationId, session.activeOrganizationId)
+              : undefined,
+            eq(t.isValid, true)
+          ),
+      });
+      return c.json(providers);
+    }
+  )
+  .post(
+    "/provider",
+    describeRoute({
+      description: "Update a model provider in the organization",
+      responses: {
+        200: {
+          description: "Successful response",
+          content: {
+            "application/json": {},
+          },
+        },
+      },
+    }),
+    async (c) => {
+      const db = c.get("db");
+      const user = c.get("user");
+      const session = c.get("session");
+      if (!session.activeOrganizationId) {
+        throw new BizError(BizCodeEnum.OrganizationNotFound);
+      }
     }
   );
 

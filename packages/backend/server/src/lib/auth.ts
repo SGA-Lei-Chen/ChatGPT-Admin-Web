@@ -7,6 +7,7 @@ import {
   captcha,
   emailOTP,
   openAPI,
+  organization,
   twoFactor,
   username,
 } from "better-auth/plugins";
@@ -32,6 +33,21 @@ export const auth = betterAuth({
       verification: schema.verification,
     },
   }),
+  databaseHooks: {
+    // session: {
+    //   create: {
+    //     before: async (session) => {
+    //       const organization = await getActiveOrganization(session.userId);
+    //       return {
+    //         data: {
+    //           ...session,
+    //           activeOrganizationId: organization.id,
+    //         },
+    //       };
+    //     },
+    //   },
+    // },
+  },
   advanced: {
     database: {
       generateId: () => uuidv7(),
@@ -44,6 +60,7 @@ export const auth = betterAuth({
     passkey(),
     admin(),
     apiKey(),
+    organization(),
     // emailOTP({
     //   async sendVerificationOTP({ email, otp, type }) {
     //     const inngest = await getTenantInngest(tenantId);
