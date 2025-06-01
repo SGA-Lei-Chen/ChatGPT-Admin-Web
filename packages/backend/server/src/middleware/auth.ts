@@ -1,13 +1,14 @@
 import type { Session } from "@server/lib/auth";
 import type { MiddlewareHandler } from "hono";
-
+import { auth } from "@server/lib/auth";
 export const authMiddleware: MiddlewareHandler<{
   Variables: {
     user: Session["user"] | null;
     session: Session["session"] | null;
   };
 }> = async (c, next) => {
-  const auth = c.get("auth");
+  // const auth = c.get("auth");
+  c.set("auth", auth);
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
   if (!session) {
