@@ -1,8 +1,7 @@
-
 export const BizCodeEnum = {
-  DatabaseError: "DATABASE_ERROR",
+  // General
   InvalidRequest: "INVALID_REQUEST",
-
+  // Authentication
   AuthFailed: "AUTH_FAILED",
   InvalidPassword: "INVALID_PASSWORD",
   InvalidVerificationCode: "INVALID_VERIFICATION_CODE",
@@ -11,18 +10,21 @@ export const BizCodeEnum = {
   VerifyCodeSendFailed: "VERIFY_CODE_SEND_FAILED",
   EmailAlreadyUsed: "EMAIL_ALREADY_USED",
   RegisterFailed: "REGISTER_FAILED",
-
+  // User
   UserNotFound: "USER_NOT_FOUND",
+  OrganizationNotFound: "ORGANIZATION_NOT_FOUND",
 } as const;
+
+export type BizCode = (typeof BizCodeEnum)[keyof typeof BizCodeEnum];
 
 export default class BizError extends Error {
   name = "BizError";
 
-  public readonly code: string;
+  public readonly code: BizCode;
   public readonly statusCode: number;
   public readonly message: string;
 
-  constructor(code: (typeof BizCodeEnum)[keyof typeof BizCodeEnum]) {
+  constructor(code: BizCode) {
     const [statusCode, message] = BizErrorEnum[code];
     super(message);
     this.code = code;
@@ -32,12 +34,10 @@ export default class BizError extends Error {
 }
 
 export const BizErrorEnum: Record<
-  (typeof BizCodeEnum)[keyof typeof BizCodeEnum],
+  BizCode,
   [statusCode: number, message: string]
 > = {
-  [BizCodeEnum.DatabaseError]: [500, "Database error"],
   [BizCodeEnum.InvalidRequest]: [400, "Invalid request"],
-
   [BizCodeEnum.AuthFailed]: [401, "Authentication failed"],
   [BizCodeEnum.InvalidPassword]: [401, "Invalid password"],
   [BizCodeEnum.InvalidVerificationCode]: [401, "Invalid verification code"],
@@ -47,4 +47,5 @@ export const BizErrorEnum: Record<
   [BizCodeEnum.EmailAlreadyUsed]: [400, "Email already used"],
   [BizCodeEnum.RegisterFailed]: [400, "Register failed"],
   [BizCodeEnum.UserNotFound]: [404, "User not found"],
+  [BizCodeEnum.OrganizationNotFound]: [404, "Organization not found"],
 } as const;

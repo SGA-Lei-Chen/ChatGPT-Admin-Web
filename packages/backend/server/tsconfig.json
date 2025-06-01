@@ -14,5 +14,13 @@
       "@server/*": ["./src/*"]
     }
   },
+  "references": [
+    {
+      "path": "../database"
+    },
+    {
+      "path": "../../common/error"
+    }
+  ],
   "include": ["./src/**/*", "./test/**/*"]
 }

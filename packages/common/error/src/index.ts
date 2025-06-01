@@ -1,24 +1,47 @@
+import type BizError from "./biz";
+import type { BizCode } from "./biz";
+
+export type ErrorType = "BIZ" | "DATABASE" | "NETWORK" | "UNKNOWN";
+
 export interface UserFriendlyErrorResponse {
   status: number;
-  code: string;
-  type: string;
-  name: ErrorName;
+  name: string;
+  type: ErrorType;
+  code: BizCode;
   message: string;
-  data?: any;
-  stacktrace?: string;
+  // data?: any;
+  // stacktrace?: string;
 }
 
 export class UserFriendlyError
   extends Error
   implements UserFriendlyErrorResponse
 {
-  readonly status = this.response.status;
-  readonly code = this.response.code;
-  readonly type = this.response.type;
-  override readonly name = this.response.name;
-  override readonly message = this.response.message;
-  readonly data = this.response.data;
-  readonly stacktrace = this.response.stacktrace;
+  readonly status;
+  readonly code;
+  readonly type;
+  override readonly name;
+  override readonly message;
+  // readonly data = this.response.data;
+  // readonly stacktrace = this.response.stacktrace;
+
+  constructor(private readonly response: UserFriendlyErrorResponse) {
+    super(response.message);
+    this.status = response.status;
+    this.code = response.code;
+    this.type = response.type;
+    this.message = response.message;
+  }
+
+  static fromBiz(biz: BizError) {
+    return new UserFriendlyError({
+      status: biz.statusCode,
+      type: "BIZ",
+      name: biz.name,
+      code: biz.code,
+      message: biz.message,
+    });
+  }
 
   // static fromAny(anything: any) {
   //   if (anything instanceof UserFriendlyError) {
@@ -26,9 +49,9 @@ export class UserFriendlyError
   //   }
 
   //   switch (typeof anything) {
-  //     case 'string':
+  //     case "string":
   //       return UnknownError(anything);
-  //     case 'object': {
+  //     case "object": {
   //       if (anything) {
   //         if (anything instanceof GraphQLError) {
   //           return new UserFriendlyError(anything.extensions);
@@ -41,14 +64,10 @@ export class UserFriendlyError
   //     }
   //   }
 
-  //   return UnknownError('Unhandled error raised. Please contact us for help.');
+  //   return UnknownError("Unhandled error raised. Please contact us for help.");
   // }
 
-  constructor(private readonly response: UserFriendlyErrorResponse) {
-    super(response.message);
-  }
-
-  is(name: ErrorName) {
+  is(name: BizErrorName) {
     return this.name === name;
   }
 
@@ -57,7 +76,7 @@ export class UserFriendlyError
   }
 
   static isNetworkError(error: UserFriendlyError) {
-    return error.name === 'NETWORK_ERROR';
+    return error.name === "NETWORK_ERROR";
   }
 
   static notNetworkError(error: UserFriendlyError) {

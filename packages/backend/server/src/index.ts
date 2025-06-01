@@ -24,7 +24,8 @@ import loggerMiddleware from "./middleware/logger";
 
 /* Error */
 import { DatabaseError } from "pg";
-import BizError, { BizCodeEnum } from "./error";
+import { UserFriendlyError } from "@achat/error";
+import BizError, { BizCodeEnum } from "@achat/error/biz";
 
 /* Business Routes */
 import systemRouter from "./routes/system";
@@ -61,15 +62,15 @@ app.onError((err, c) => {
       err.statusCode as ContentfulStatusCode
     );
   }
-  if (err instanceof DatabaseError) {
-    return c.json(
-      {
-        code: BizCodeEnum.DatabaseError,
-        message: err.code,
-      },
-      500
-    );
-  }
+  // if (err instanceof DatabaseError) {
+  //   return c.json(
+  //     {
+  //       code: BizCodeEnum.DatabaseError,
+  //       message: err.code,
+  //     },
+  //     500
+  //   );
+  // }
   console.error(err);
   return c.json(
     {
