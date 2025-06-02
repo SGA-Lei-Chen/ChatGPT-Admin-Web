@@ -15,17 +15,19 @@ import type {
   InferResponseType,
 } from "hono/client";
 
-// Utility function to generate SWR key
+/**
+ * Utility function to generate SWR key
+ */
 function generateSWRKey<TMethod extends ClientMethod<any, any>>(
   method: TMethod,
   args?: InferRequestType<TMethod>
 ): Key {
-  const path = method.__path;
-  const httpMethod = method.__method;
-  return [`hc:${httpMethod}:${path}`, args];
+  return ["hc", ...method.__path, args];
 }
 
-// useHC Hook for GET requests (SWR)
+/**
+ * useHC Hook for Query requests (SWR)
+ */
 export function useHC<TMethod extends ClientMethod<any, any>>(
   method: TMethod,
   ...params: InferRequestType<TMethod> extends never
@@ -42,37 +44,14 @@ export function useHC<TMethod extends ClientMethod<any, any>>(
 ): SWRResponse<InferResponseType<TMethod>, Error> {
   const [args, options = {}] = params;
 
-  // 分离 SWR 配置和客户端配置
+  // Separate SWR configuration and client configuration
   const {
     fetch: _fetch,
     webSocket,
     init,
     headers,
-    // SWR 的所有配置选项
-    revalidateOnFocus,
-    revalidateOnMount,
-    revalidateOnReconnect,
-    refreshInterval,
-    refreshWhenOffline,
-    refreshWhenHidden,
-    dedupingInterval,
-    focusThrottleInterval,
-    loadingTimeout,
-    errorRetryInterval,
-    errorRetryCount,
-    fallback,
-    fallbackData,
-    keepPreviousData,
-    suspense,
-    compare,
-    isPaused,
-    use,
-    onSuccess,
-    onError,
-    onErrorRetry,
-    onLoadingSlow,
-    shouldRetryOnError,
-    ...restOptions
+    // All SWR configuration options
+    ...swrOptions
   } = options;
 
   const clientOptions: ClientRequestOptions = {
@@ -80,33 +59,6 @@ export function useHC<TMethod extends ClientMethod<any, any>>(
     webSocket,
     init,
     headers,
-  };
-
-  const swrOptions = {
-    revalidateOnFocus,
-    revalidateOnMount,
-    revalidateOnReconnect,
-    refreshInterval,
-    refreshWhenOffline,
-    refreshWhenHidden,
-    dedupingInterval,
-    focusThrottleInterval,
-    loadingTimeout,
-    errorRetryInterval,
-    errorRetryCount,
-    fallback,
-    fallbackData,
-    keepPreviousData,
-    suspense,
-    compare,
-    isPaused,
-    use,
-    onSuccess,
-    onError,
-    onErrorRetry,
-    onLoadingSlow,
-    shouldRetryOnError,
-    ...restOptions,
   };
 
   const swrKey = generateSWRKey(method, args);
@@ -126,7 +78,7 @@ export function useHC<TMethod extends ClientMethod<any, any>>(
           throw error;
         }
 
-        // 根据响应的 Content-Type 自动解析
+        // Automatically parse the response Content-Type
         const contentType = response.headers.get("content-type") || "";
 
         if (contentType.includes("application/json")) {
@@ -135,7 +87,7 @@ export function useHC<TMethod extends ClientMethod<any, any>>(
         if (contentType.includes("text/")) {
           return await response.text();
         }
-        // 对于其他类型，尝试 json，失败则返回 text
+        // For other types, try json, otherwise return text
         try {
           return await response.json();
         } catch {
@@ -150,20 +102,22 @@ export function useHC<TMethod extends ClientMethod<any, any>>(
   );
 }
 
-// useHCMutation Hook for POST requests (SWR Mutation)
+/**
+ * useHCMutation Hook for Mutation requests (SWR Mutation)
+ */
 export function useHCMutation<TMethod extends ClientMethod<any, any>>(
   method: TMethod,
   options?: SWRMutationConfiguration<
     InferResponseType<TMethod>,
     Error,
-    string,
+    Key,
     InferRequestType<TMethod>
   > &
     ClientRequestOptions
 ): SWRMutationResponse<
   InferResponseType<TMethod>,
   Error,
-  string,
+  Key,
   InferRequestType<TMethod>
 > {
   const {
@@ -183,9 +137,14 @@ export function useHCMutation<TMethod extends ClientMethod<any, any>>(
 
   const swrKey = generateSWRKey(method);
 
-  return useSWRMutation(
+  return useSWRMutation<
+    InferResponseType<TMethod>,
+    Error,
+    Key,
+    InferRequestType<TMethod>
+  >(
     swrKey,
-    async (key: Key, { arg }: { arg: InferRequestType<TMethod> }) => {
+    async (_: Key, { arg }: { arg: InferRequestType<TMethod> }) => {
       try {
         const response = await method(arg, clientOptions);
 
@@ -222,44 +181,48 @@ export function useHCMutation<TMethod extends ClientMethod<any, any>>(
   );
 }
 
-// // 扩展Hook：获取原始响应对象
-// export function useHCRaw<TMethod extends HonoClientMethod>(
-//   method: TMethod,
-//   ...params: InferRequestType<TMethod> extends never
-//     ? [
-//         args?: InferRequestType<TMethod>,
-//         options?: SWRConfiguration<ClientResponseOfEndpoint<any>> &
-//           ClientRequestOptions
-//       ]
-//     : [
-//         args: InferRequestType<TMethod>,
-//         options?: SWRConfiguration<ClientResponseOfEndpoint<any>> &
-//           ClientRequestOptions
-//       ]
-// ): SWRResponse<ClientResponseOfEndpoint<any>, Error> {
-//   const [args, options = {}] = params;
+/*
+ * Getting the original response object
+ */
+export function useHCRaw<TMethod extends ClientMethod<any, any>>(
+  method: TMethod,
+  ...params: InferRequestType<TMethod> extends never
+    ? [
+        args?: InferRequestType<TMethod>,
+        options?: SWRConfiguration<InferResponseType<TMethod>> &
+          ClientRequestOptions
+      ]
+    : [
+        args: InferRequestType<TMethod>,
+        options?: SWRConfiguration<InferResponseType<TMethod>> &
+          ClientRequestOptions
+      ]
+): SWRResponse<InferResponseType<TMethod>, Error> {
+  const [args, options = {}] = params;
 
-//   const { fetch: _fetch, webSocket, init, headers, ...swrOptions } = options;
+  const { fetch: _fetch, webSocket, init, headers, ...swrOptions } = options;
 
-//   const clientOptions: ClientRequestOptions = {
-//     fetch: _fetch,
-//     webSocket,
-//     init,
-//     headers,
-//   };
+  const clientOptions: ClientRequestOptions = {
+    fetch: _fetch,
+    webSocket,
+    init,
+    headers,
+  };
 
-//   const swrKey = generateSWRKey(method, args) + ":raw";
+  const swrKey = generateSWRKey(method, args);
 
-//   return useSWR(
-//     swrKey,
-//     async () => {
-//       return await method(args, clientOptions);
-//     },
-//     swrOptions
-//   );
-// }
+  return useSWR(
+    swrKey,
+    async () => {
+      return await method(args, clientOptions);
+    },
+    swrOptions
+  );
+}
 
-// 工具函数：手动触发重新验证
+/*
+ * Trigger revalidation manually
+ */
 export function mutateHC<TMethod extends ClientMethod<any, any>>(
   method: TMethod,
   args?: InferRequestType<TMethod>
@@ -268,7 +231,9 @@ export function mutateHC<TMethod extends ClientMethod<any, any>>(
   return mutate(key);
 }
 
-// 工具类型：检查方法是否需要参数
+/*
+ * Check if the method requires arguments
+ */
 export type RequiresArgs<TMethod> = InferRequestType<TMethod> extends never
   ? false
   : true;

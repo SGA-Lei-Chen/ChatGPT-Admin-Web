@@ -18,16 +18,6 @@ const apiClient = hcWithType("/api", {
     credentials: "include",
   },
 });
-export const adminClient = adminClientWithType("/api/admin", {
-  init: {
-    credentials: "include",
-  },
-});
-export const userClient = userClientWithType("/api/user", {
-  init: {
-    credentials: "include",
-  },
-});
 export default apiClient;
 
 // export class BizClientError extends Error {
