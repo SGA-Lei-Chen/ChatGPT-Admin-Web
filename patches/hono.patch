@@ -1,8 +1,18 @@
 diff --git a/dist/cjs/client/client.js b/dist/cjs/client/client.js
-index 90e23e5bcdc5c07be3c71cfb3fbe2334278fa220..6cdf14daec32eac421895bc70700243ed5dbcae5 100644
+index 90e23e5bcdc5c07be3c71cfb3fbe2334278fa220..1228c9eebbb8442b2b90abebf82b14edeb9faf3c 100644
 --- a/dist/cjs/client/client.js
 +++ b/dist/cjs/client/client.js
-@@ -144,7 +144,7 @@ const hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
+@@ -30,6 +30,9 @@ const createProxy = (callback, path) => {
+       if (typeof key !== "string" || key === "then") {
+         return void 0;
+       }
++      if (key === "__path") {
++        return path;
++      }
+       return createProxy(callback, [...path, key]);
+     },
+     apply(_1, _2, args) {
+@@ -144,7 +147,7 @@ const hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
          result = result + "?" + (0, import_utils.buildSearchParams)(opts.args[0].query).toString();
        }
      }
@@ -11,44 +21,21 @@ index 90e23e5bcdc5c07be3c71cfb3fbe2334278fa220..6cdf14daec32eac421895bc70700243e
    }
    if (method === "ws") {
      const webSocketUrl = (0, import_utils.replaceUrlProtocol)(
-@@ -174,7 +174,31 @@ const hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
-   if (method) {
-     options ??= {};
-     const args = (0, import_utils.deepMerge)(options, { ...opts.args[1] });
--    return req.fetch(opts.args[0], args);
-+    const originalFetch = req.fetch.bind(req);
-+    const enhancedFetch = async (args, opt) => {
-+      return originalFetch(args, opt);
-+    };
-+    const routePath = '/' + parts.filter(p => p !== '').join('/');
-+    Object.defineProperty(enhancedFetch, '__path', {
-+      value: routePath,
-+      writable: false,
-+      enumerable: false,
-+      configurable: false
-+    });
-+    Object.defineProperty(enhancedFetch, '__method', {
-+      value: method.toUpperCase(),
-+      writable: false,
-+      enumerable: false,
-+      configurable: false
-+    });
-+    Object.defineProperty(enhancedFetch, '__baseUrl', {
-+      value: baseUrl,
-+      writable: false,
-+      enumerable: false,
-+      configurable: false
-+    });
-+    Object.setPrototypeOf(enhancedFetch, originalFetch);
-+    return enhancedFetch(opts.args[0], args);
-   }
-   return req;
- }, []);
 diff --git a/dist/client/client.js b/dist/client/client.js
-index 7c7f9840d220770f70ecf99214fb2afd363cd674..23df04b6455017e30f17d6dfb2547a5599e87b77 100644
+index 7c7f9840d220770f70ecf99214fb2afd363cd674..df5d418a16595ed30e4befef188434947ef8bc84 100644
 --- a/dist/client/client.js
 +++ b/dist/client/client.js
-@@ -129,7 +129,7 @@ var hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
+@@ -15,6 +15,9 @@ var createProxy = (callback, path) => {
+       if (typeof key !== "string" || key === "then") {
+         return void 0;
+       }
++      if (key === "__path") {
++        return path;
++      }
+       return createProxy(callback, [...path, key]);
+     },
+     apply(_1, _2, args) {
+@@ -129,7 +132,7 @@ var hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
          result = result + "?" + buildSearchParams(opts.args[0].query).toString();
        }
      }
@@ -57,39 +44,6 @@ index 7c7f9840d220770f70ecf99214fb2afd363cd674..23df04b6455017e30f17d6dfb2547a55
    }
    if (method === "ws") {
      const webSocketUrl = replaceUrlProtocol(
-@@ -159,7 +159,31 @@ var hc = (baseUrl, options) => createProxy(function proxyCallback(opts) {
-   if (method) {
-     options ??= {};
-     const args = deepMerge(options, { ...opts.args[1] });
--    return req.fetch(opts.args[0], args);
-+    const originalFetch = req.fetch.bind(req);
-+    const enhancedFetch = async (args, opt) => {
-+      return originalFetch(args, opt);
-+    };
-+    const routePath = '/' + parts.filter(p => p !== '').join('/');
-+    Object.defineProperty(enhancedFetch, '__path', {
-+      value: routePath,
-+      writable: false,
-+      enumerable: false,
-+      configurable: false
-+    });
-+    Object.defineProperty(enhancedFetch, '__method', {
-+      value: method.toUpperCase(),
-+      writable: false,
-+      enumerable: false,
-+      configurable: false
-+    });
-+    Object.defineProperty(enhancedFetch, '__baseUrl', {
-+      value: baseUrl,
-+      writable: false,
-+      enumerable: false,
-+      configurable: false
-+    });
-+    Object.setPrototypeOf(enhancedFetch, originalFetch);
-+    return enhancedFetch(opts.args[0], args);
-   }
-   return req;
- }, []);
 diff --git a/dist/types/client/index.d.ts b/dist/types/client/index.d.ts
 index 3a15f2ef75770dc52eaf5e58ddc724916ddc1194..38a960202136b4a9929566ab4eb05ce5e9177537 100644
 --- a/dist/types/client/index.d.ts
@@ -101,30 +55,26 @@ index 3a15f2ef75770dc52eaf5e58ddc724916ddc1194..38a960202136b4a9929566ab4eb05ce5
 -export type { InferResponseType, InferRequestType, Fetch, ClientRequestOptions, ClientRequest, ClientResponse, } from './types';
 +export type { InferResponseType, InferRequestType, Fetch, ClientRequestOptions, ClientRequest, ClientResponse, ClientMethod } from './types';
 diff --git a/dist/types/client/types.d.ts b/dist/types/client/types.d.ts
-index fb6f879fd1975b72b6c392e540dc3e2a1110e589..0c3a5549eae49d29048f3bdaafbf5faea77f7fb7 100644
+index fb6f879fd1975b72b6c392e540dc3e2a1110e589..dbad886cf63a9d115fc2e1dca0016660095ee382 100644
 --- a/dist/types/client/types.d.ts
 +++ b/dist/types/client/types.d.ts
-@@ -4,6 +4,19 @@ import type { Endpoint, ResponseFormat, Schema } from '../types';
+@@ -4,6 +4,15 @@ import type { Endpoint, ResponseFormat, Schema } from '../types';
  import type { StatusCode, SuccessStatusCode } from '../utils/http-status';
  import type { HasRequiredKeys } from '../utils/types';
  type HonoRequest = (typeof Hono.prototype)["request"];
 +interface RequiredClientMethod<TArgs, TResponse> {
 +    (args: TArgs, options?: ClientRequestOptions): Promise<TResponse>;
-+    __path: string;
-+    __method: string;
-+    __baseUrl: string;
++    __path: string[];
 +}
 +interface OptionalClientMethod<TArgs, TResponse> {
 +    (args?: TArgs, options?: ClientRequestOptions): Promise<TResponse>;
-+    __path: string;
-+    __method: string;
-+    __baseUrl: string;
++    __path: string[];
 +}
 +export type ClientMethod<TArgs, TResponse> = RequiredClientMethod<TArgs, TResponse> | OptionalClientMethod<TArgs, TResponse>;
  export type ClientRequestOptions<T = unknown> = {
      fetch?: typeof fetch | HonoRequest;
      webSocket?: (...args: ConstructorParameters<typeof WebSocket>) => WebSocket;
-@@ -22,7 +35,7 @@ export type ClientRequestOptions<T = unknown> = {
+@@ -22,7 +31,7 @@ export type ClientRequestOptions<T = unknown> = {
  export type ClientRequest<S extends Schema> = {
      [M in keyof S]: S[M] extends Endpoint & {
          input: infer R;
@@ -133,7 +83,7 @@ index fb6f879fd1975b72b6c392e540dc3e2a1110e589..0c3a5549eae49d29048f3bdaafbf5fae
  } & {
      $url: (arg?: S[keyof S] extends {
          input: infer R;
-@@ -39,7 +52,7 @@ export type ClientRequest<S extends Schema> = {
+@@ -39,7 +48,7 @@ export type ClientRequest<S extends Schema> = {
          query: infer Q;
      } ? {
          query: Q;
