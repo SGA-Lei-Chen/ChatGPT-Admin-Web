@@ -1,5 +1,5 @@
 import BizError, { BizCodeEnum } from "@achat/error/biz";
-import { createAnthropic } from "@ai-sdk/anthropic";
+import { anthropic, createAnthropic } from "@ai-sdk/anthropic";
 import type { Session } from "@server/lib/auth";
 import {
   createProviderRegistry,
@@ -17,26 +17,34 @@ const injectModelProvider = createMiddleware<{
 }>(async (c, next) => {
   const user = c.get("user");
   const session = c.get("session");
-  const organizationId = session.activeOrganizationId;
-  if (!organizationId) {
-    throw new BizError(BizCodeEnum.OrganizationNotFound);
-  }
-  const providers = await c.get("db").query.provider.findMany({
-    where: (t, { eq }) => eq(t.organizationId, organizationId),
-  });
-  const registryProviders = providers.map((provider) => {
-    if (provider.providerType === "anthropic") {
-      return {
-        anthropic: createAnthropic({
-          apiKey: provider.config?.apiKey,
-        }),
-      };
+  // const organizationId = session.activeOrganizationId;
+  // if (!organizationId) {
+  //   throw new BizError(BizCodeEnum.OrganizationNotFound);
+  // }
+  // const providers = await c.get("db").query.provider.findMany({
+  //   where: (t, { eq }) => eq(t.organizationId, organizationId),
+  // });
+  // const registryProviders = providers.map((provider) => {
+  //   if (provider.providerType === "anthropic") {
+  //     return {
+  //       anthropic: createAnthropic({
+  //         apiKey: provider.config?.apiKey,
+  //       }),
+  //     };
+  //   }
+  //   return {};
+  // });
+  // const modelProvider = createProviderRegistry(registryProviders, {
+  //   separator: "/",
+  // });
+  const modelProvider = createProviderRegistry(
+    {
+      anthropic,
+    },
+    {
+      separator: "/",
     }
-    return {};
-  });
-  const modelProvider = createProviderRegistry(registryProviders, {
-    separator: "/",
-  });
+  );
   c.set("modelProvider", modelProvider);
   return next();
 });

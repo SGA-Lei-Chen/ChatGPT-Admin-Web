@@ -10,11 +10,11 @@ const loggerMiddleware: MiddlewareHandler<{
   const start = Date.now();
 
   c.set("logger", logger);
-  logger.initMeta({
-    requestId: c.get("requestId"),
-    method: c.req.method,
-    path: c.req.path,
-  });
+  // logger.initMeta({
+  //   requestId: c.get("requestId"),
+  //   method: c.req.method,
+  //   path: c.req.path,
+  // });
 
   await next();
   const duration = Date.now() - start;

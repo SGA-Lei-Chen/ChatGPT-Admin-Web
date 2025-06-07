@@ -3,7 +3,6 @@ import {
   boolean,
   jsonb,
   pgTable,
-  text,
   timestamp,
   uuid,
   varchar,
@@ -11,6 +10,8 @@ import {
 import { organization } from "../auth/organization";
 import { timeColumns } from "../../utils/columns";
 import z from "zod";
+import { createSelectSchema, createInsertSchema } from "drizzle-zod";
+import { v7 as uuidv7 } from "uuid";
 
 export const ProviderConfig = z.object({
   apiUrl: z.string().optional(),
@@ -19,7 +20,7 @@ export const ProviderConfig = z.object({
 export type ProviderConfig = z.infer<typeof ProviderConfig>;
 
 export const provider = pgTable("provider", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().$defaultFn(uuidv7),
   organizationId: uuid("organization_id")
     .notNull()
     .references(() => organization.id),
@@ -35,18 +36,22 @@ export const provider = pgTable("provider", {
   /* 配额类型 */
   quotaType: varchar("quota_type", { length: 50 }),
   /* 配额上限 */
-  quotaLimit: bigint("quota_limit", { mode: "bigint" }),
+  quotaLimit: bigint("quota_limit", { mode: "number" }),
   /* 已用配额 */
-  quotaUsed: bigint("quota_used", { mode: "bigint" }).default(0n),
+  quotaUsed: bigint("quota_used", { mode: "number" }).default(0),
   /* 最后使用时间 */
   lastUsed: timestamp("last_used"),
 
   ...timeColumns(),
 });
+export const Provider = createSelectSchema(provider);
+export type Provider = typeof provider.$inferSelect;
+export const NewProvider = createInsertSchema(provider);
+export type NewProvider = typeof provider.$inferInsert;
 
 export const providerModels = pgTable("provider_models", {
   /* 主键 */
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().$defaultFn(uuidv7),
   /* 所属租户 */
   organizationId: uuid("organization_id")
     .notNull()
@@ -68,7 +73,10 @@ export const providerModels = pgTable("provider_models", {
 
   ...timeColumns(),
 });
-
+export const ProviderModels = createSelectSchema(providerModels);
+export type ProviderModels = typeof providerModels.$inferSelect;
+export const NewProviderModels = createInsertSchema(providerModels);
+export type NewProviderModels = typeof providerModels.$inferInsert;
 // export const providerModelSettings = pgTable("provider_model_settings", {
 //   /* 主键 */
 //   id: uuid("id").primaryKey(),

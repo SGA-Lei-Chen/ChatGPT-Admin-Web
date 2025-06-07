@@ -16,7 +16,7 @@ import db from "./database";
 import { v7 as uuidv7 } from "uuid";
 
 export const auth = betterAuth({
-  // trustedOrigins,
+  trustedOrigins: ["http://localhost:5173"],
   // account: {
   //   accountLinking: {
   //     enabled: true,
@@ -109,18 +109,22 @@ export const auth = betterAuth({
     },
     resetPasswordTokenExpiresIn: 3600, // 1 hour
   },
-  // socialProviders: {
-  // 	github: {
-  // 		enabled: !!(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET),
-  // 		clientId: env.GITHUB_CLIENT_ID as string,
-  // 		clientSecret: env.GITHUB_CLIENT_SECRET as string,
-  // 	},
-  // 	google: {
-  // 		enabled: !!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET),
-  // 		clientId: env.GOOGLE_CLIENT_ID as string,
-  // 		clientSecret: env.GOOGLE_CLIENT_SECRET as string,
-  // 	},
-  // },
+  socialProviders: {
+    github: {
+      enabled: !!(
+        process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET
+      ),
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    },
+    google: {
+      enabled: !!(
+        process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+      ),
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
 });
 
 export type Auth = typeof auth;
