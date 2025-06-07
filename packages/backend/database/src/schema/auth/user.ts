@@ -12,7 +12,7 @@ import { organization } from "./organization";
 export const pgTable = pgTableCreator((name) => `auth_${name}`);
 
 export const user = pgTable("user", {
-  id: text("id").primaryKey(),
+  id: uuid("id").primaryKey(),
   role: text("role"),
   username: text("username").unique(),
 
@@ -50,7 +50,7 @@ export const session = pgTable("session", {
 export const account = pgTable("account", {
   id: uuid("id").primaryKey(),
   accountId: uuid("account_id").notNull(),
-  providerId: uuid("provider_id").notNull(),
+  providerId: text("provider_id").notNull(),
   userId: uuid("user_id")
     .notNull()
     .references(() => user.id),

@@ -1,6 +1,9 @@
 import type { Session } from "@server/lib/auth";
 import type { MiddlewareHandler } from "hono";
 import { auth } from "@server/lib/auth";
+import { BizCodeEnum } from "@achat/error/biz";
+import BizError from "@achat/error/biz";
+
 export const authMiddleware: MiddlewareHandler<{
   Variables: {
     user: Session["user"] | null;
@@ -24,7 +27,7 @@ export const authMiddleware: MiddlewareHandler<{
 
 export const authGuard =
   (
-    role: "user" | "admin",
+    role: "user" | "admin"
   ): MiddlewareHandler<{
     Variables: {
       user: Session["user"];
@@ -34,12 +37,10 @@ export const authGuard =
   async (c, next) => {
     const user = c.var.user;
     if (!user) {
-      return c.json({ error: "Unauthorized" }, 401);
+      throw new BizError(BizCodeEnum.Unauthorized);
     }
-
     if (role === "admin" && user.role !== "admin") {
-      return c.json({ error: "Forbidden" }, 403);
+      throw new BizError(BizCodeEnum.Forbidden);
     }
-
     return next();
   };

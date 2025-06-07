@@ -36,7 +36,7 @@ import adminRouter from "./routes/admin";
 import type { ConnInfo } from "hono/conninfo";
 // import type { Redis } from "ioredis";
 import type { Logger } from "winston";
-import type { Auth } from "./lib/auth";
+import { auth, type Auth } from "./lib/auth";
 import type { DataBase } from "./lib/database";
 // import { inngestHandler } from "./queues";
 
@@ -129,7 +129,7 @@ app.use(loggerMiddleware);
 // app.on(["GET", "PUT", "POST"], "/inngest", inngestHandler);
 // 2. Authentication
 app.on(["POST", "GET"], "/auth/:path{.+}", (c) => {
-  const auth = c.get("auth");
+  // const auth = c.get("auth");
   return auth.handler(c.req.raw);
 });
 // 3. Business Routes

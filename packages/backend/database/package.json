@@ -13,7 +13,7 @@
     "ts-map": "tsc --rootDir ./src --emitDeclarationOnly",
     "dev": "bunchee -w --success \"npm run ts-map\"",
     "build": "bunchee && npm run asset",
-    "push": "drizzle-kit push",
+    "push": "dotenv -- drizzle-kit push",
     "migrate": "tsx migrate.ts",
     "generate": "drizzle-kit generate"
   },

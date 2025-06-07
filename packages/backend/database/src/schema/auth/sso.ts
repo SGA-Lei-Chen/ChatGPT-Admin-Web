@@ -7,7 +7,7 @@ export const ssoProvider = pgTable("sso_provider", {
   issuer: text("issuer").notNull(),
   domain: text("domain").notNull(),
   oidcConfig: text("oidc_config").notNull(),
-  userId: text("user_id")
+  userId: uuid("user_id")
     .notNull()
     .references(() => user.id),
   providerId: uuid("provider_id").notNull(),
