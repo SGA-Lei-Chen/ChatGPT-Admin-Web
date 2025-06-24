@@ -21,6 +21,12 @@
 
 
 <div align="center">
+<a href="https://trendshift.io/repositories/4856" target="_blank">
+<img src="https://trendshift.io/api/badge/repositories/4856" alt="AprilNEA%2FChatGPT-Admin-Web | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/>
+</a>
+</div>
+
+<div align="center">
 
 [GitHub Sponsor](https://github.com/sponsors/AprilNEA) / [爱发电](https://afdian.net/a/aprilnea)
 

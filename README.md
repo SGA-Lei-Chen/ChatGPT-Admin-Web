@@ -19,7 +19,10 @@
   <img src="https://hits.aprilnea.com/hits?url=https://github.com/AprilNEA/AChat" />
 </p>
 
-
+<div align="center">
+<a href="https://trendshift.io/repositories/4856" target="_blank">
+<img src="https://trendshift.io/api/badge/repositories/4856" alt="AprilNEA%2FChatGPT-Admin-Web | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/>
+</a>
 </div>
 
 <div align="center">
@@ -59,12 +62,12 @@ For configuration and installation, see [documentation](https://manual.sku.moe/p
 
 ## Versions
 
-| Version                                    | Status                               | Note |
-| ------------------------------------------ | ------------------------------------ | ---- |
-| [V4](https://github.com/AprilNEA/AChat/tree/canary) | :white_check_mark: Under Development |      |
-| [V3](https://github.com/AprilNEA/AChat/tree/v3)   | :o: No longer updated    | Refactor with modern tech stack |
-| [V2](https://github.com/AprilNEA/AChat/tree/v2)   | :x: Deprecated                       | Flawed design                   |
-| [V1](https://github.com/AprilNEA/AChat/tree/main) | :o: No longer updated                | Redis database, less scalable   |
+| Version                                             | Status                               | Note                            |
+| --------------------------------------------------- | ------------------------------------ | ------------------------------- |
+| [V4](https://github.com/AprilNEA/AChat/tree/canary) | :white_check_mark: Under Development |                                 |
+| [V3](https://github.com/AprilNEA/AChat/tree/v3)     | :o: No longer updated                | Refactor with modern tech stack |
+| [V2](https://github.com/AprilNEA/AChat/tree/v2)     | :x: Deprecated                       | Flawed design                   |
+| [V1](https://github.com/AprilNEA/AChat/tree/main)   | :o: No longer updated                | Redis database, less scalable   |
 
 [Update Log](https://manual.sku.moe/project/chatgpt-admin-web/update-log)
 
