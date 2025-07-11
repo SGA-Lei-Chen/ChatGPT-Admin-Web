@@ -32,12 +32,12 @@ export function useHC<TMethod extends ClientMethod<any, any>>(
   method: TMethod,
   ...params: InferRequestType<TMethod> extends never
     ? [
-        args?: InferRequestType<TMethod>,
+        args?: InferRequestType<TMethod> | null,
         options?: SWRConfiguration<InferResponseType<TMethod>> &
           ClientRequestOptions
       ]
     : [
-        args: InferRequestType<TMethod>,
+        args: InferRequestType<TMethod> | null,
         options?: SWRConfiguration<InferResponseType<TMethod>> &
           ClientRequestOptions
       ]
@@ -61,7 +61,7 @@ export function useHC<TMethod extends ClientMethod<any, any>>(
     headers,
   };
 
-  const swrKey = generateSWRKey(method, args);
+  const swrKey = args ? generateSWRKey(method, args) : null;
 
   return useSWR(
     swrKey,

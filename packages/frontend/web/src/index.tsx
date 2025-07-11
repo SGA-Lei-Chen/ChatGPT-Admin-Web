@@ -2,7 +2,7 @@ import "./instrument.ts";
 import * as Sentry from "@sentry/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./app.tsx";
+import App from "./router.tsx";
 import "./index.css";
 
 // biome-ignore lint/style/noNonNullAssertion: Exist in ./index.html
@@ -14,9 +14,13 @@ const root = createRoot(container, {
     console.warn("Uncaught error", error, errorInfo.componentStack);
   }),
   // Callback called when React catches an error in an ErrorBoundary.
-  onCaughtError: Sentry.reactErrorHandler(),
+  onCaughtError: Sentry.reactErrorHandler((error, errorInfo) => {
+    console.warn("Caught error", error, errorInfo.componentStack);
+  }),
   // Callback called when React automatically recovers from errors.
-  onRecoverableError: Sentry.reactErrorHandler(),
+  onRecoverableError: Sentry.reactErrorHandler((error, errorInfo) => {
+    console.warn("Recoverable error", error, errorInfo.componentStack);
+  }),
 });
 
 root.render(

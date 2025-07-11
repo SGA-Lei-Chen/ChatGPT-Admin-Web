@@ -1,8 +1,20 @@
 import { GalleryVerticalEnd } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { LoginForm } from "./login-form";
+import { authClient } from "@/lib/auth-client";
+import { useEffect } from "react";
 
 export default function LoginPage() {
+  const [, navigate] = useLocation();
+  const { data, isPending } = authClient.useSession();
+
+  useEffect(() => {
+    if (isPending) return;
+    if (data) {
+      navigate("/app");
+    }
+  }, [navigate, data, isPending]);
+
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -13,7 +25,7 @@ export default function LoginPage() {
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          Acme Inc.
+          AChat
         </Link>
         <LoginForm />
       </div>
