@@ -1,4 +1,4 @@
-import { useHC, useHCMutation } from "@/lib/hono-swr";
+import { useHC, useHCMutation } from "@/hooks/use-hono-swr";
 import apiClient from "@/lib/api-client";
 
 // interface UseConversationOptions {

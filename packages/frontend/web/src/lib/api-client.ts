@@ -1,17 +1,4 @@
-// import type { BizCodeEnum } from "@achat/server/error";
-import {
-  hcWithType,
-  userClientWithType,
-  adminClientWithType,
-} from "@achat/server/hc";
-// import type { Schema } from "hono";
-// import type {
-//   ClientRequest,
-//   InferRequestType,
-//   InferResponseType,
-// } from "hono/client";
-// import useSWR from "swr";
-// import type { SWRConfiguration } from "swr";
+import { hcWithType } from "@achat/server/hc";
 
 const apiClient = hcWithType("/api", {
   init: {

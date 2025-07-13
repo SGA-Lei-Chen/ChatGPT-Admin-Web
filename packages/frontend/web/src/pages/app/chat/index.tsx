@@ -4,7 +4,7 @@ import {
   ChatBubbleMessage,
 } from "@/components/ui/chat/chat-bubble";
 import { ChatMessageList } from "@/components/ui/chat/chat-message-list";
-import { useHC } from "@/lib/hono-swr";
+import { useHC } from "@/hooks/use-hono-swr";
 import apiClient from "@/lib/api-client";
 import ChatInput from "./input";
 

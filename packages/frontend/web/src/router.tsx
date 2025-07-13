@@ -2,6 +2,7 @@ import { Route, Switch } from "wouter";
 
 import AuthPage from "./pages/auth";
 import ChatPage from "./pages/app/chat";
+import SetupPage from "./pages/setup";
 
 import AppSidebar from "./components/sidebar";
 import { AuthGuard } from "./provider/auth-provider";
@@ -15,6 +16,7 @@ const App = () => (
       the first matched route gets rendered
     */}
     <Switch>
+      <Route path="/setup" component={SetupPage} />
       <Route path="/auth" component={AuthPage} />
 
       <AppSidebar>
