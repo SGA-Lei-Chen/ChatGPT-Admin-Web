@@ -9,11 +9,10 @@ const app = new Hono()
     })
   )
   .get(
-    "/health",
+    "/",
     describeRoute({
       description:
         "Health check endpoint that returns the system status in either plain text or JSON format",
-
       responses: {
         200: {
           description: "Successful response",

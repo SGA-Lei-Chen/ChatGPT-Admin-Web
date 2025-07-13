@@ -19,5 +19,5 @@
       "path": "../../common/error"
     }
   ],
-  "include": ["./src/**/*", "./test/**/*"]
+  "include": ["./src/**/*", "./test/**/*", "openapi-scalar.d.ts"]
 }

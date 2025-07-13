@@ -148,19 +148,7 @@ app.get(
     url: "/api/openapi",
   })
 );
-declare module "openapi-types" {
-  namespace OpenAPIV3 {
-    interface Document {
-      "x-tagGroups"?: Array<{
-        name: string;
-        tags: string[];
-      }>;
-    }
-    interface TagObject {
-      "x-displayName"?: string;
-    }
-  }
-}
+
 app.get(
   "/openapi",
   openAPISpecs(routes, {
@@ -175,7 +163,7 @@ app.get(
       "x-tagGroups": [
         {
           name: "System",
-          tags: ["Health"],
+          tags: ["Health", "Setup"],
         },
         {
           name: "User",

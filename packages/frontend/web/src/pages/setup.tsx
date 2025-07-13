@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -18,7 +17,6 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
-import { useState } from "react";
 import { GalleryVerticalEnd, Loader2 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useHCMutation } from "@/hooks/use-hono-swr";

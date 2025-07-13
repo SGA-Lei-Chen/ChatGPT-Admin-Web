@@ -8,6 +8,11 @@ let isSetup: boolean | undefined = undefined;
 
 const app = appFactory
   .createApp()
+  .use(
+    describeRoute({
+      tags: ["Setup"],
+    })
+  )
   .get(
     "/status",
     describeRoute({
