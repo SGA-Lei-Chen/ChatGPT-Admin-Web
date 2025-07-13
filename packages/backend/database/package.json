@@ -3,6 +3,7 @@
   "type": "module",
   "main": "./src/index.ts",
   "exports": {
+    ".": "./src/index.ts",
     "./frontend": "./src/frontend/index.ts",
     "./schema": "./src/schema.ts",
     "./utils": "./src/utils.ts"
