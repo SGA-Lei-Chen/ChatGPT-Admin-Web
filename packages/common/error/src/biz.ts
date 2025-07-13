@@ -3,6 +3,7 @@ export const BizCodeEnum = {
   InvalidRequest: "INVALID_REQUEST",
   Unauthorized: "UNAUTHORIZED",
   Forbidden: "FORBIDDEN",
+  Conflict: "CONFLICT",
 
   // Authentication
   AuthFailed: "AUTH_FAILED",
@@ -46,6 +47,7 @@ export const BizErrorEnum: Record<
   [BizCodeEnum.InvalidRequest]: [400, "Invalid request"],
   [BizCodeEnum.Unauthorized]: [401, "Unauthorized"],
   [BizCodeEnum.Forbidden]: [403, "Forbidden"],
+  [BizCodeEnum.Conflict]: [409, "Conflict"],
   [BizCodeEnum.AuthFailed]: [401, "Authentication failed"],
   [BizCodeEnum.InvalidPassword]: [401, "Invalid password"],
   [BizCodeEnum.InvalidVerificationCode]: [401, "Invalid verification code"],

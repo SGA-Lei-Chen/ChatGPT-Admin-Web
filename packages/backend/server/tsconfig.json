@@ -1,14 +1,6 @@
 {
+  "extends": "@achat/tsconfig/node-library.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "strict": true,
-    "verbatimModuleSyntax": true,
-    "types": ["node"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
       "@server/*": ["./src/*"]
