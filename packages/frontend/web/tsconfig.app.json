@@ -28,6 +28,9 @@
       "@/*": ["./src/*"]
     }
   },
-  "references": [{ "path": "../../backend/server/tsconfig.json" }],
+  "references": [
+    { "path": "../../backend/server/tsconfig.json" },
+    { "path": "../../backend/database/tsconfig.json" }
+  ],
   "include": ["src"]
 }

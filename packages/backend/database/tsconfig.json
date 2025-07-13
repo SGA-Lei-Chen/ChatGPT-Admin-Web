@@ -3,8 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "./dist",
-    // "baseUrl": "./src",
     "tsBuildInfoFile": "./dist/.tsbuildinfo"
   },
-  "include": ["src/**/*.ts", "src/schema/provider"]
+  "include": ["src/**/*.ts"]
 }

@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "@achat/server": "workspace:*",
+    "@achat/database": "workspace:*",
     "@electric-sql/client": "^1.0.7",
+    "@electric-sql/pglite": "^0.3.4",
+    "@electric-sql/pglite-react": "^0.2.22",
+    "@electric-sql/pglite-sync": "^0.3.7",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-collapsible": "^1.1.11",

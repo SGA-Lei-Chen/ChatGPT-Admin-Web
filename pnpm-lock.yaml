@@ -27,10 +27,10 @@ importers:
         version: 8.0.0
       drizzle-orm:
         specifier: ^0.44.2
-        version: 0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+        version: 0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
       drizzle-zod:
         specifier: ^0.8.2
-        version: 0.8.2(drizzle-orm@0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.23.8)
+        version: 0.8.2(drizzle-orm@0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.23.8)
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
@@ -191,10 +191,10 @@ importers:
     dependencies:
       drizzle-orm:
         specifier: '*'
-        version: 0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+        version: 0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
       drizzle-zod:
         specifier: '*'
-        version: 0.7.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56)
+        version: 0.7.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56)
       uuid:
         specifier: '*'
         version: 11.1.0
@@ -222,7 +222,7 @@ importers:
         version: 0.28.1
       drizzle-seed:
         specifier: ^0.3.1
-        version: 0.3.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))
+        version: 0.3.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))
       esbuild:
         specifier: '*'
         version: 0.24.2
@@ -288,10 +288,10 @@ importers:
         version: 16.5.0
       drizzle-orm:
         specifier: '*'
-        version: 0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+        version: 0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
       drizzle-zod:
         specifier: '*'
-        version: 0.7.1(drizzle-orm@0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56)
+        version: 0.7.1(drizzle-orm@0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56)
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
@@ -315,7 +315,7 @@ importers:
         version: 19.1.0
       react-querybuilder:
         specifier: ^8.0.0
-        version: 8.7.0(@types/react@19.1.2)(drizzle-orm@0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(react@19.1.0)(redux@5.0.1)
+        version: 8.7.0(@types/react@19.1.2)(drizzle-orm@0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(react@19.1.0)(redux@5.0.1)
       ssh2:
         specifier: ^1.16.0
         version: 1.16.0
@@ -438,12 +438,24 @@ importers:
 
   packages/frontend/web:
     dependencies:
+      '@achat/database':
+        specifier: workspace:*
+        version: link:../../backend/database
       '@achat/server':
         specifier: workspace:*
         version: link:../../backend/server
       '@electric-sql/client':
         specifier: ^1.0.7
         version: 1.0.7
+      '@electric-sql/pglite':
+        specifier: ^0.3.4
+        version: 0.3.4
+      '@electric-sql/pglite-react':
+        specifier: ^0.2.22
+        version: 0.2.22(@electric-sql/pglite@0.3.4)(react@19.1.0)
+      '@electric-sql/pglite-sync':
+        specifier: ^0.3.7
+        version: 0.3.7(@electric-sql/pglite@0.3.4)
       '@hookform/resolvers':
         specifier: ^5.0.1
         version: 5.0.1(react-hook-form@7.57.0(react@19.1.0))
@@ -900,11 +912,30 @@ packages:
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
 
+  '@electric-sql/client@1.0.0':
+    resolution: {integrity: sha512-kGiVbBIlMqc/CeJpWZuLjxNkm0836NWxeMtIWH2w5IUK8pUL13hyxg3ZkR7+FlTGhpKuZRiCP5nPOH9D6wbhPw==}
+
   '@electric-sql/client@1.0.7':
     resolution: {integrity: sha512-w9geRoZL1gn294Nn68YxicRvWFJEXWYPr+jZubSOyjaSa6tVQJk0rjYuFmOwpQyudFQrsL17HFrGga9UOaBhdA==}
 
-  '@electric-sql/pglite@0.2.17':
-    resolution: {integrity: sha512-qEpKRT2oUaWDH6tjRxLHjdzMqRUGYDnGZlKrnL4dJ77JVMcP2Hpo3NYnOSPKdZdeec57B6QPprCUFg0picx5Pw==}
+  '@electric-sql/experimental@1.0.0':
+    resolution: {integrity: sha512-wOKZyph3cvJ4J5fDwqDpR7nilPOHEFwAtbAM5X/PhV3JZCSzmkbosaQRWsxbHQ80MJv7gNFP960+TyqGAjqouQ==}
+    peerDependencies:
+      '@electric-sql/client': 1.0.0
+
+  '@electric-sql/pglite-react@0.2.22':
+    resolution: {integrity: sha512-Pw/+q1hyZN53y6MTvHPpnGWYzg+ZZs33pDpxnNjVEVmgw2lfHx6U/bHHww4lBuHNfQjzDvRSxXey/xkcb8FoMA==}
+    peerDependencies:
+      '@electric-sql/pglite': 0.3.4
+      react: 19.1.0
+
+  '@electric-sql/pglite-sync@0.3.7':
+    resolution: {integrity: sha512-sMlt3Y338VdhRUtbP3Vm/O6h6O9uqsSxwE52lHfOgRmeUv1zAymqgaeHzDztzpcEs2svfQbnKXetI/97mqqbEA==}
+    peerDependencies:
+      '@electric-sql/pglite': 0.3.4
+
+  '@electric-sql/pglite@0.3.4':
+    resolution: {integrity: sha512-h5hoL2GuxcWN8Q3+jtesIRem14iIvAZVEsTeUF6eO9RiUb6ar73QVIEW9t+Ud58iXAcAE2dFMtWqw3W2Oo4LDw==}
 
   '@emnapi/runtime@1.4.3':
     resolution: {integrity: sha512-pBPWdu6MLKROBX05wSNKcNb++m5Er+KQ9QkB+WVM+pW2Kx9hoSrVTnu3BdkI5eBLZoKu/J6mW/B6i6bJB2ytXQ==}
@@ -9847,14 +9878,34 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
+  '@electric-sql/client@1.0.0':
+    optionalDependencies:
+      '@rollup/rollup-darwin-arm64': 4.41.1
+
   '@electric-sql/client@1.0.7':
     dependencies:
       '@microsoft/fetch-event-source': 2.0.1
     optionalDependencies:
       '@rollup/rollup-darwin-arm64': 4.41.1
 
-  '@electric-sql/pglite@0.2.17':
-    optional: true
+  '@electric-sql/experimental@1.0.0(@electric-sql/client@1.0.0)':
+    dependencies:
+      '@electric-sql/client': 1.0.0
+    optionalDependencies:
+      '@rollup/rollup-darwin-arm64': 4.41.1
+
+  '@electric-sql/pglite-react@0.2.22(@electric-sql/pglite@0.3.4)(react@19.1.0)':
+    dependencies:
+      '@electric-sql/pglite': 0.3.4
+      react: 19.1.0
+
+  '@electric-sql/pglite-sync@0.3.7(@electric-sql/pglite@0.3.4)':
+    dependencies:
+      '@electric-sql/client': 1.0.0
+      '@electric-sql/experimental': 1.0.0(@electric-sql/client@1.0.0)
+      '@electric-sql/pglite': 0.3.4
+
+  '@electric-sql/pglite@0.3.4': {}
 
   '@emnapi/runtime@1.4.3':
     dependencies:
@@ -14570,41 +14621,41 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0):
+  drizzle-orm@0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0):
     optionalDependencies:
-      '@electric-sql/pglite': 0.2.17
+      '@electric-sql/pglite': 0.3.4
       '@opentelemetry/api': 1.9.0
       '@types/pg': 8.15.2
       kysely: 0.28.2
       pg: 8.16.0
 
-  drizzle-orm@0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0):
+  drizzle-orm@0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0):
     optionalDependencies:
-      '@electric-sql/pglite': 0.2.17
+      '@electric-sql/pglite': 0.3.4
       '@opentelemetry/api': 1.9.0
       '@types/pg': 8.15.2
       kysely: 0.28.2
       pg: 8.16.0
 
-  drizzle-seed@0.3.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)):
+  drizzle-seed@0.3.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)):
     dependencies:
       pure-rand: 6.1.0
     optionalDependencies:
-      drizzle-orm: 0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+      drizzle-orm: 0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
 
-  drizzle-zod@0.7.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56):
+  drizzle-zod@0.7.1(drizzle-orm@0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56):
     dependencies:
-      drizzle-orm: 0.41.0(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+      drizzle-orm: 0.41.0(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
       zod: 3.25.56
 
-  drizzle-zod@0.7.1(drizzle-orm@0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56):
+  drizzle-zod@0.7.1(drizzle-orm@0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.25.56):
     dependencies:
-      drizzle-orm: 0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+      drizzle-orm: 0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
       zod: 3.25.56
 
-  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.23.8):
+  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(zod@3.23.8):
     dependencies:
-      drizzle-orm: 0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+      drizzle-orm: 0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
       zod: 3.23.8
 
   dunder-proto@1.0.1:
@@ -15786,7 +15837,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.17.51
+      '@types/node': 24.0.13
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -17714,7 +17765,7 @@ snapshots:
     dependencies:
       fast-deep-equal: 2.0.1
 
-  react-querybuilder@8.7.0(@types/react@19.1.2)(drizzle-orm@0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(react@19.1.0)(redux@5.0.1):
+  react-querybuilder@8.7.0(@types/react@19.1.2)(drizzle-orm@0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0))(react@19.1.0)(redux@5.0.1):
     dependencies:
       '@reduxjs/toolkit': 2.8.2(react-redux@9.2.0(@types/react@19.1.2)(react@19.1.0)(redux@5.0.1))(react@19.1.0)
       immer: 10.1.1
@@ -17722,7 +17773,7 @@ snapshots:
       react: 19.1.0
       react-redux: 9.2.0(@types/react@19.1.2)(react@19.1.0)(redux@5.0.1)
     optionalDependencies:
-      drizzle-orm: 0.44.2(@electric-sql/pglite@0.2.17)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
+      drizzle-orm: 0.44.2(@electric-sql/pglite@0.3.4)(@opentelemetry/api@1.9.0)(@types/pg@8.15.2)(kysely@0.28.2)(pg@8.16.0)
     transitivePeerDependencies:
       - '@types/react'
       - redux

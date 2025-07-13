@@ -10,11 +10,22 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
     expose:
       - 5432
-    # ports:
-    #   - "5432:5432"
     volumes:
       - postgres-data:/home/postgres/pgdata/data
     restart: always
+
+  electric:
+    image: electricsql/electric
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-postgres}?sslmode=disable
+      # Not suitable for production. Only use insecure mode in development or if you've otherwise secured the Electric API.
+      # See https://electric-sql.com/docs/guides/security
+      ELECTRIC_INSECURE: true
+      ELECTRIC_PORT: 5433
+    expose:
+      - 5433
+    depends_on:
+      - postgres
 
   redis:
     container_name: achat-redis
@@ -23,8 +34,6 @@ services:
       - "REDIS_ARGS=--appendonly yes"
     expose:
       - 6379
-    # ports:
-    #   - "6379:6379"
     volumes:
       - redis-data:/data
     restart: always
@@ -39,8 +48,6 @@ services:
       INNGEST_SQLITE_DIR: /data
     expose:
       - 8288
-    # ports:
-    #   - "8288:8288"
     volumes:
       - inngest-data:/data
 
@@ -56,19 +63,7 @@ services:
     expose:
       - 9000
       - 9001
-    # ports:
-    #   - "9000:9000"
-    #   - "9001:9001"
       
-  # loki:
-  #   image: grafana/loki:3.4.1
-  #   command: -config.file=/etc/loki/local-config.yaml
-  #   ports:
-  #     - "3100:3100"
-  #   volumes:
-  #     - nboard-loki-data:/loki
-  #   restart: always
-
 volumes:
   postgres-data:
   redis-data:
