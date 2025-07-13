@@ -1,6 +1,6 @@
 import BizError, { BizCodeEnum } from "@achat/error/biz";
 import { anthropic, createAnthropic } from "@ai-sdk/anthropic";
-import type { Session } from "@server/lib/auth";
+import type { AuthSession } from "@server/lib/auth";
 import {
   createProviderRegistry,
   type ProviderRegistryProvider,
@@ -10,8 +10,8 @@ import { createMiddleware } from "hono/factory";
 
 const injectModelProvider = createMiddleware<{
   Variables: {
-    user: Session["user"];
-    session: Session["session"];
+    user: AuthSession["user"];
+    session: AuthSession["session"];
     modelProvider: ProviderRegistryProvider<Record<string, Provider>, "/">;
   };
 }>(async (c, next) => {

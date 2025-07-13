@@ -1,5 +1,5 @@
 import * as schema from "@achat/database/schema";
-import { betterAuth } from "better-auth";
+import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
   admin,
@@ -15,7 +15,7 @@ import { passkey } from "better-auth/plugins/passkey";
 import db from "./database";
 import { v7 as uuidv7 } from "uuid";
 
-export const auth = betterAuth({
+const authConfig: BetterAuthOptions = {
   trustedOrigins: ["http://localhost:5173"],
   // account: {
   //   accountLinking: {
@@ -125,7 +125,9 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-});
+};
+export const auth: ReturnType<typeof betterAuth<typeof authConfig>> =
+  betterAuth(authConfig);
 
 export type Auth = typeof auth;
-export type Session = Auth["$Infer"]["Session"];
+export type AuthSession = Auth["$Infer"]["Session"];

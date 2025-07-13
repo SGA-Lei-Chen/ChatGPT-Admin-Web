@@ -1,12 +1,12 @@
 import { createFactory } from "hono/factory";
-import type { Session } from "./lib/auth";
+import type { AuthSession } from "./lib/auth";
 import type { DataBase } from "./lib/database";
 import { authGuard, authMiddleware } from "./middleware/auth";
 
 export const appFactory = createFactory<{
   Variables: {
-    user: Session["user"] | null;
-    session: Session["session"] | null;
+    user: AuthSession["user"] | null;
+    session: AuthSession["session"] | null;
   };
 }>({
   initApp: (app) => {

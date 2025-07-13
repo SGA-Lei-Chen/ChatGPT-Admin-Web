@@ -1,4 +1,4 @@
-import type { Session } from "@server/lib/auth";
+import type { AuthSession } from "@server/lib/auth";
 import type { MiddlewareHandler } from "hono";
 import { auth } from "@server/lib/auth";
 import { BizCodeEnum } from "@achat/error/biz";
@@ -6,8 +6,8 @@ import BizError from "@achat/error/biz";
 
 export const authMiddleware: MiddlewareHandler<{
   Variables: {
-    user: Session["user"] | null;
-    session: Session["session"] | null;
+    user: AuthSession["user"] | null;
+    session: AuthSession["session"] | null;
   };
 }> = async (c, next) => {
   // const auth = c.get("auth");
@@ -30,8 +30,8 @@ export const authGuard =
     role: "user" | "admin"
   ): MiddlewareHandler<{
     Variables: {
-      user: Session["user"];
-      session: Session["session"];
+      user: AuthSession["user"];
+      session: AuthSession["session"];
     };
   }> =>
   async (c, next) => {
