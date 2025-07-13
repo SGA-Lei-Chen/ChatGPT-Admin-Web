@@ -5,7 +5,11 @@
     "paths": {
       "@server/*": ["./src/*"]
     },
-    "composite": true
+    "composite": true,
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "declaration": true,
+    "types": ["node", "@simplewebauthn/server"]
   },
   "references": [
     {

@@ -15,44 +15,9 @@ import { passkey } from "better-auth/plugins/passkey";
 import db from "./database";
 import { v7 as uuidv7 } from "uuid";
 
-const authConfig: BetterAuthOptions = {
+const authConfig = {
+  appName: "AChat",
   trustedOrigins: ["http://localhost:5173"],
-  // account: {
-  //   accountLinking: {
-  //     enabled: true,
-  //     trustedProviders: ["google", "github"],
-  //     allowDifferentEmails: true,
-  //   },
-  // },
-  database: drizzleAdapter(db, {
-    provider: "pg",
-    schema: {
-      user: schema.user,
-      session: schema.session,
-      account: schema.account,
-      verification: schema.verification,
-    },
-  }),
-  databaseHooks: {
-    // session: {
-    //   create: {
-    //     before: async (session) => {
-    //       const organization = await getActiveOrganization(session.userId);
-    //       return {
-    //         data: {
-    //           ...session,
-    //           activeOrganizationId: organization.id,
-    //         },
-    //       };
-    //     },
-    //   },
-    // },
-  },
-  advanced: {
-    database: {
-      generateId: () => uuidv7(),
-    },
-  },
   plugins: [
     openAPI(),
     username(),
@@ -87,7 +52,44 @@ const authConfig: BetterAuthOptions = {
     // 		provider: "cloudflare-turnstile",
     // 		secretKey: env.CF_TURNSTILE_SECRET_KEY,
     // 	}),
-  ].filter(Boolean),
+  ],
+  database: drizzleAdapter(db, {
+    provider: "pg",
+    schema: {
+      user: schema.user,
+      session: schema.session,
+      account: schema.account,
+      verification: schema.verification,
+    },
+  }),
+  // account: {
+  //   accountLinking: {
+  //     enabled: true,
+  //     trustedProviders: ["google", "github"],
+  //     allowDifferentEmails: true,
+  //   },
+  // },
+
+  // databaseHooks: {
+  // session: {
+  //   create: {
+  //     before: async (session) => {
+  //       const organization = await getActiveOrganization(session.userId);
+  //       return {
+  //         data: {
+  //           ...session,
+  //           activeOrganizationId: organization.id,
+  //         },
+  //       };
+  //     },
+  //   },
+  // },
+  // },
+  advanced: {
+    database: {
+      generateId: () => uuidv7(),
+    },
+  },
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }) => {
       // Send verification email to user
@@ -125,7 +127,7 @@ const authConfig: BetterAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-};
+} satisfies BetterAuthOptions;
 export const auth: ReturnType<typeof betterAuth<typeof authConfig>> =
   betterAuth(authConfig);
 

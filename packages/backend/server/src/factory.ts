@@ -1,7 +1,8 @@
 import { createFactory } from "hono/factory";
-import type { AuthSession } from "./lib/auth";
+import { auth, type AuthSession } from "./lib/auth";
 import type { DataBase } from "./lib/database";
 import { authGuard, authMiddleware } from "./middleware/auth";
+import db from "./lib/database";
 
 export const appFactory = createFactory<{
   Variables: {
@@ -11,5 +12,10 @@ export const appFactory = createFactory<{
 }>({
   initApp: (app) => {
     app.use(authMiddleware);
+    app.use(async (c, next) => {
+      c.set("db", db);
+      c.set("auth", auth);
+      await next();
+    });
   },
 });

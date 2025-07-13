@@ -10,7 +10,7 @@ import { Hono } from "hono";
 import { showRoutes } from "hono/dev";
 
 /* API Documentation */
-import { apiReference } from "@scalar/hono-api-reference";
+import { Scalar } from "@scalar/hono-api-reference";
 import { openAPISpecs } from "hono-openapi";
 
 /* Middleware */
@@ -143,9 +143,9 @@ app.route("/", routes);
 // 4. API Documentation
 app.get(
   "/docs",
-  apiReference({
-    theme: "saturn",
-    spec: { url: "/api/openapi" },
+  Scalar({
+    theme: "purple",
+    url: "/api/openapi",
   })
 );
 declare module "openapi-types" {

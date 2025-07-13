@@ -1,7 +1,6 @@
 import { appFactory } from "@server/factory";
 import { describeRoute } from "hono-openapi";
-import { resolver } from "hono-openapi/zod";
-import { zValidator } from "@hono/zod-validator";
+import { resolver, validator as zValidator } from "hono-openapi/zod";
 import { z } from "zod";
 import BizError, { BizCodeEnum } from "@achat/error/biz";
 
