@@ -10,7 +10,7 @@ if (!dbUrl) {
 
 export const drizzleConfig: Config = {
   dialect: "postgresql",
-  schema: "./src/schema/**/*.ts",
+  schema: "./src/schema/schema.ts",
   out: "./drizzle/migrations/",
   dbCredentials: {
     url: dbUrl,
